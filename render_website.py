@@ -1,9 +1,8 @@
 import json
-from http.server import HTTPServer, SimpleHTTPRequestHandler
 
-from jinja2 import Environment, FileSystemLoader, Template, select_autoescape
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from livereload import Server
-
+from more_itertools import chunked
 
 def render_page():
     with open('library.json', 'r', encoding='utf-8') as lib_file:
@@ -15,7 +14,7 @@ def render_page():
         )
     index_template = env.get_template('index-template.html')
     rendered_index_page = index_template.render(
-        books=lib_register
+        book_pairs=chunked(lib_register, 2)
     )
 
     with open('index.html', 'w', encoding='utf-8') as html_file:
