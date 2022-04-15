@@ -1,4 +1,5 @@
 import json
+import math
 import os
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -16,14 +17,15 @@ def render_page():
             autoescape=select_autoescape(['html'])
         )
     index_template = env.get_template('index-template.html')
-
     os.makedirs(pages_dir, exist_ok=True)
+
     for num_page, books_on_page in enumerate(chunked(lib_register, 20)):
         rendered_book_page = index_template.render(
-            num_page=num_page,
+            num_page=num_page+1,
+            num_pages=math.ceil(len(lib_register)/20),
             book_pairs=chunked(books_on_page, 2)
         )
-        page_fullpath = os.path.join(pages_dir, f'index{num_page}.html')
+        page_fullpath = os.path.join(pages_dir, f'index{num_page+1}.html')
         with open(page_fullpath, 'w', encoding='utf-8') as html_file:
             html_file.write(rendered_book_page)
 
