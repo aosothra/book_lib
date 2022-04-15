@@ -2,6 +2,8 @@
 
 This repository contains static files and rendered HTML pages to host a book library for Maxim's grandpa.
 
+[[Visit library]](https://aosothra.github.io/book_lib/pages/index1.html)
+
 You may also find a utility script, that can render a new set of pages based on downloaded library files.
 
 ## Installation guidelines
