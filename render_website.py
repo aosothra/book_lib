@@ -9,8 +9,7 @@ from more_itertools import chunked
 def render_pages():
     pages_dir = 'pages'
 
-    with open('library.json', 'r', encoding='utf-8') as lib_file:
-        lib_register = json.loads(lib_file.read())
+    lib_register = json.load('library.json')
 
     env = Environment(
             loader=FileSystemLoader('templates'),
