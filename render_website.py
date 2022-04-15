@@ -6,7 +6,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from livereload import Server
 from more_itertools import chunked
 
-def render_page():
+def render_pages():
     pages_dir = 'pages'
 
     with open('library.json', 'r', encoding='utf-8') as lib_file:
@@ -31,10 +31,10 @@ def render_page():
 
 
 def main():
-    render_page()
+    render_pages()
 
     server = Server()
-    server.watch('templates/*.html', render_page)
+    server.watch('templates/*.html', render_pages)
     server.serve(host='localhost', port=5000)
 
 if __name__=="__main__":
