@@ -2,8 +2,10 @@ import json
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
 from jinja2 import Environment, FileSystemLoader, Template, select_autoescape
+from livereload import Server
 
-def main():
+
+def render_page():
     with open('library.json', 'r', encoding='utf-8') as lib_file:
         lib_register = json.loads(lib_file.read())
 
@@ -19,13 +21,13 @@ def main():
     with open('index.html', 'w', encoding='utf-8') as html_file:
         html_file.write(rendered_index_page)
 
-    try:
-        server = HTTPServer(('0.0.0.0', 5000), SimpleHTTPRequestHandler)
-        print(f'Serving on {server.server_address[0]}:{server.server_address[1]}')
-        server.serve_forever()        
-    except KeyboardInterrupt:
-        print('Shutting server down...')
-        server.shutdown()
+
+def main():
+    render_page()
+
+    server = Server()
+    server.watch('templates/*.html', render_page)
+    server.serve(host='localhost', port=5000)
 
 if __name__=="__main__":
     main()
